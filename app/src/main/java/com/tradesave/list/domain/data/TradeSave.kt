@@ -58,7 +58,7 @@ data class TradeSave(
         return if (positionType == PositionType.Long) {
             ((exitValue * exitQty) - (enterValue * enterQty)) / ((enterValue * enterQty) / 100)
         } else {
-            ((enterValue * enterQty) - (exitValue * exitQty)) / ((exitQty * exitQty) / 100)
+            ((enterValue * enterQty) - (exitValue * exitQty)) / ((enterValue * enterQty) / 100)
         }
     }
 

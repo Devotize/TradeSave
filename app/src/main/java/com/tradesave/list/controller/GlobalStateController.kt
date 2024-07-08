@@ -1,9 +1,13 @@
 package com.tradesave.list.controller
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.tradesave.list.app.TradeSaveApplication
 import com.tradesave.list.database.TradeSaveDatabase
 import com.tradesave.list.domain.data.DashboardInfo
+import com.tradesave.list.domain.data.Status
 import com.tradesave.list.domain.data.TradePoint
 import com.tradesave.list.domain.data.TradeSave
 import com.tradesave.list.repo.TradeSaveRepository
@@ -16,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
+import kotlin.math.abs
 
 class GlobalStateController private constructor(appContext: Context) {
 
@@ -33,15 +38,9 @@ class GlobalStateController private constructor(appContext: Context) {
         repository.getSavedTrades().map { savedTrades ->
             val overall = savedTrades.getProfitOverall()
             val profitToday = savedTrades.getProfitToday()
-            val profitNotToday = savedTrades.getProfitNotoday()
-            val percentsForToday = if (profitToday.toDouble() == 0.0) {
-                0.0
-            } else {
-                (profitNotToday.toDouble() / profitToday.toDouble()) * 100
-            }
             DashboardInfo(
                 overall = overall,
-                todayPercents = percentsForToday
+                todayPercents = profitToday
             )
         }
 
@@ -167,7 +166,23 @@ class GlobalStateController private constructor(appContext: Context) {
             }
 
             is WriteReview -> {
-                // TODO
+                with(event.context) {
+                    try {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=${packageName}")
+                            )
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps/details?id=${packageName}")
+                            )
+                        )
+                    }
+                }
             }
 
             is DeleteAllTrades -> {
@@ -201,23 +216,23 @@ class GlobalStateController private constructor(appContext: Context) {
     private fun List<TradeSave>.getProfitOverall(): BigDecimal {
         var profit = BigDecimal(0)
         forEach {
-            profit += it.getProfit()
+            if (it.getStatus() == Status.Profit) {
+                profit += it.getProfit().abs()
+            } else {
+                profit -= it.getProfit().abs()
+            }
         }
         return profit
     }
 
-    private fun List<TradeSave>.getProfitToday(): BigDecimal {
-        var profit = BigDecimal(0)
+    private fun List<TradeSave>.getProfitToday(): Double {
+        var profit = 0.0
         filter { it.isToday() }.forEach {
-            profit += it.getProfit()
-        }
-        return profit
-    }
-
-    private fun List<TradeSave>.getProfitNotoday(): BigDecimal {
-        var profit = BigDecimal(0)
-        filter { !it.isToday() }.forEach {
-            profit += it.getProfit()
+            if (it.getStatus() == Status.Profit) {
+                profit += abs(it.getPercents() ?: 0.0)
+            } else {
+                profit -= abs(it.getPercents() ?: 0.0)
+            }
         }
         return profit
     }

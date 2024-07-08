@@ -110,7 +110,7 @@ fun SettingsScreen(
                     hasTrailingIcon = true,
                     value = null,
                     onClick = {
-                        sendEvent.invoke(WriteReview)
+                        sendEvent.invoke(WriteReview(context))
                     }
                 )
                 TradeSaveDivider(Modifier.padding(vertical = Padding10))

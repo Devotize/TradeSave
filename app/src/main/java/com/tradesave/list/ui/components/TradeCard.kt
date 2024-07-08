@@ -36,6 +36,7 @@ import com.tradesave.list.utils.PercentsFormat
 import com.tradesave.list.utils.TradeSaveDateFormatter
 import com.tradesave.list.utils.TradeSaveTimeFormatter
 import com.tradesave.list.utils.toLocalString
+import java.math.BigDecimal
 import kotlin.math.abs
 
 @Composable
@@ -247,9 +248,14 @@ fun TradeCardMainSection(
                         PercentsFormat.format(abs(it))
                     } ?: "0"
                 }
+                val profitText =
+                    when(val profit = tradeSave.getProfit()) {
+                        BigDecimal.ZERO -> PercentsFormat.format(profit)
+                        else -> profit.abs().toLocalString()
+                    }
                 Text(
                     text = "${sign}${
-                        tradeSave.getProfit().abs().toLocalString()
+                        profitText
                     } • $percentsText%",
                     style = typography.h2Bold,
                     color = statusColor,

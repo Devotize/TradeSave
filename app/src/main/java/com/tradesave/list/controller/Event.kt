@@ -1,5 +1,6 @@
 package com.tradesave.list.controller
 
+import android.content.Context
 import com.tradesave.list.domain.data.PositionType
 import com.tradesave.list.domain.data.TradeSave
 import java.math.BigDecimal
@@ -38,12 +39,12 @@ class SetTradeToEdit(val tradeSave: TradeSave) : Event
 
 class ChangeNote(val note: String?): Event
 
+class WriteReview(val context: Context) : Event
+
 data object RemoveExit : Event
 
 data object AddExit : Event
 
 data object SaveTrade : Event
-
-data object WriteReview : Event
 
 data object DeleteAllTrades : Event

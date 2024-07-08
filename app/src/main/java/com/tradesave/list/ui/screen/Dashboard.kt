@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -41,6 +42,10 @@ import com.tradesave.list.ui.theme.Padding32
 import com.tradesave.list.ui.theme.Padding38
 import com.tradesave.list.ui.theme.Padding8
 import com.tradesave.list.ui.theme.Radius12
+import com.tradesave.list.utils.PercentsFormat
+import com.tradesave.list.utils.toLocalString
+import java.math.BigDecimal
+import kotlin.math.abs
 
 @Composable
 fun DashboardScreen(
@@ -141,17 +146,47 @@ private fun Info(
             color = colors.grey,
         )
         Spacer(Modifier.height(Padding8))
+        val sign = remember {
+            when {
+                info.todayPercents > 0.0 -> "+"
+                info.todayPercents < 0.0 -> "-"
+                else -> ""
+            }
+        }
+        val overallText =
+            if (info.overall != BigDecimal.ZERO) {
+                info.overall.toLocalString()
+            } else {
+                PercentsFormat.format(info.overall)
+            }
         Text(
-            text = "${info.overall} USD",
+            text = "${sign}${overallText} USD",
             style = typography.h2Bold,
             color = colors.textWhite
         )
         Spacer(Modifier.height(Padding8))
-        Text(
-            text = "${info.todayPercents}% ${stringResource(R.string.today_text)}",
-            style = typography.b2Regular,
-            color = colors.grey
-        )
+        val statusColor =
+            when {
+                info.todayPercents > 0.0 -> colors.green
+                info.todayPercents < 0.0 -> colors.red
+                else -> colors.grey
+            }
+
+        val percentsText =
+            PercentsFormat.format((abs(info.todayPercents)))
+        Row {
+            Text(
+                text = "${percentsText}%",
+                style = typography.b2Regular,
+                color = statusColor
+            )
+            Text(
+                text = " ${stringResource(R.string.today_text)}",
+                style = typography.b2Regular,
+                color = colors.grey
+            )
+        }
+
     }
 }
 

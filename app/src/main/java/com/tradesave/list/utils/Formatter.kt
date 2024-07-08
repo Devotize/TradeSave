@@ -6,4 +6,4 @@ import java.time.format.DateTimeFormatter
 val TradeSaveDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 val TradeSaveTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-val PercentsFormat = DecimalFormat("#.00")
+val PercentsFormat = DecimalFormat("0.00")

@@ -57,7 +57,7 @@ fun EditNoteScreen(
     val colors = LocalTradeSaveColors.current
     val focusRequester = remember { FocusRequester() }
     Box(
-        modifier = modifier.clickableNoRipple { focusRequester.freeFocus() },
+        modifier = modifier,
     ) {
         var noteText by remember { mutableStateOf(note) }
         Column(

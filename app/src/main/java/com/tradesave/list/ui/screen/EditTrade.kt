@@ -89,6 +89,8 @@ import com.tradesave.list.ui.theme.Padding14
 import com.tradesave.list.ui.theme.Padding16
 import com.tradesave.list.ui.theme.Padding2
 import com.tradesave.list.ui.theme.Padding24
+import com.tradesave.list.ui.theme.Padding32
+import com.tradesave.list.ui.theme.Padding38
 import com.tradesave.list.ui.theme.Padding4
 import com.tradesave.list.ui.theme.Padding8
 import com.tradesave.list.ui.theme.Radius10
@@ -248,69 +250,68 @@ fun EditTrade(
                             }
                         )
                     }
-                }
 
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = Padding16)
-                        .padding(top = Padding16),
-                    shape = RoundedCornerShape(
-                        topEnd = Radius16,
-                        topStart = Radius16,
-                        bottomEnd = if (trade.note == null) Radius16 else 0.dp,
-                        bottomStart = if (trade.note == null) Radius16 else 0.dp
-                    ),
-                    colors = CardDefaults.cardColors(containerColor = colors.upperSurface),
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = Padding16),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = stringResource(R.string.note_text),
-                            style = typography.b1Medium,
-                            color = colors.textWhite,
-                        )
-                        TextButton(
-                            onClick = goToEditNote
-                        ) {
-                            Text(
-                                text = if (trade.note == null) {
-                                    stringResource(R.string.add_text)
-                                } else {
-                                    stringResource(R.string.edit_text)
-                                },
-                                style = typography.b1Medium,
-                                color = colors.primary,
-                            )
-                        }
-                    }
-                }
-                trade.note?.let { note ->
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = Padding2)
-                            .padding(horizontal = Padding16),
+                            .padding(top = Padding24),
                         shape = RoundedCornerShape(
-                            bottomEnd = Radius16,
-                            bottomStart = Radius16,
+                            topEnd = Radius16,
+                            topStart = Radius16,
+                            bottomEnd = if (trade.note == null) Radius16 else 0.dp,
+                            bottomStart = if (trade.note == null) Radius16 else 0.dp
                         ),
                         colors = CardDefaults.cardColors(containerColor = colors.upperSurface),
                     ) {
-                        Text(
+                        Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(Padding16),
-                            text = note,
-                            style = typography.b1Regular,
-                            color = colors.grey,
-                        )
+                                .padding(horizontal = Padding16),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = stringResource(R.string.note_text),
+                                style = typography.b1Medium,
+                                color = colors.textWhite,
+                            )
+                            TextButton(
+                                onClick = goToEditNote
+                            ) {
+                                Text(
+                                    text = if (trade.note == null) {
+                                        stringResource(R.string.add_text)
+                                    } else {
+                                        stringResource(R.string.edit_text)
+                                    },
+                                    style = typography.b1Medium,
+                                    color = colors.primary,
+                                )
+                            }
+                        }
                     }
+                    trade.note?.let { note ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = Padding2),
+                            shape = RoundedCornerShape(
+                                bottomEnd = Radius16,
+                                bottomStart = Radius16,
+                            ),
+                            colors = CardDefaults.cardColors(containerColor = colors.upperSurface),
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(Padding16),
+                                text = note,
+                                style = typography.b1Regular,
+                                color = colors.grey,
+                            )
+                        }
+                    }
+                    Spacer(Modifier.height(Padding38 * 2))
                 }
             }
         }

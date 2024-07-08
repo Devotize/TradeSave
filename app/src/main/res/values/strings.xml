@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">TradeSave - Trade list</string>
+    <string name="long_text">Long</string>
+    <string name="short_text">Short</string>
+    <string name="dashboard_text">Dashboard</string>
+    <string name="net_profit_text">Net profit</string>
+    <string name="today_text">Today</string>
+    <string name="no_trades_text">There is no trades yet</string>
+    <string name="add_new_trade_text">Add new trade</string>
+    <string name="position_type_text">Position type</string>
+    <string name="asset_text">Asset</string>
+    <string name="date_text">Date</string>
+    <string name="time_text">Time</string>
+    <string name="price_text">Price</string>
+    <string name="quantity_text">Quantity</string>
+    <string name="fees_text">Fees</string>
+    <string name="asset_name_hint">AAPL</string>
+    <string name="entry_text">Entry</string>
+    <string name="ok_text">OK</string>
+    <string name="dismiss_text">Dismiss</string>
+    <string name="exit_text">Exit</string>
+    <string name="qty_text">Qty</string>
+    <string name="remove_text">Remove</string>
+    <string name="add_exit_text">Add Exit</string>
+    <string name="save_text">Save</string>
+    <string name="last_update">Last update</string>
+    <string name="settings_text">Settings</string>
+    <string name="trader_text">Trader</string>
+    <string name="app_version_text">App version</string>
+    <string name="write_review_text">Write a review</string>
+    <string name="delete_all_trades_text">Delete all trades</string>
+    <string name="all_stats_deleted_text">All stats deleted</string>
+    <string name="note_text">Note</string>
+    <string name="edit_text">Edit</string>
+    <string name="delete_text">Delete</string>
+    <string name="add_text">Add</string>
+</resources>

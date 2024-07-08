@@ -156,7 +156,7 @@ fun TradeCardHeaderSection(
         }
         val time = remember {
             tradeSave.exit?.time?.format(TradeSaveTimeFormatter)
-                ?: tradeSave.exit?.time?.format(TradeSaveTimeFormatter)
+                ?: tradeSave.entry?.time?.format(TradeSaveTimeFormatter)
         }
         Text(
             text = "${date.orEmpty()}, ${time.orEmpty()}",
